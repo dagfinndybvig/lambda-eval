@@ -9,6 +9,29 @@ It supports:
 - command-line evaluation from an input file
 - multiple top-level forms with sequential `(define name expr)` bindings
 
+## Historical context and timeline
+
+This project sits at the intersection of two classic traditions in computer science:
+- the lambda-calculus tradition (functions, substitution, recursion via fixed points)
+- the logic-programming tradition (symbolic reasoning in Prolog)
+
+Short timeline:
+- 1930s: Alonzo Church develops lambda calculus as a formal model of computation.
+- Late 1950s: John McCarthy creates Lisp, heavily influenced by lambda calculus; Lisp code and data are both S-expressions.
+- 1972: Alain Colmerauer and Robert Kowalski develop Prolog, a language centered on symbolic logic, unification, and search.
+- 1970s-1980s: Symbolic AI grows around languages like Lisp and Prolog for theorem proving, planning, expert systems, and knowledge representation.
+- Today: Statistical and neural methods dominate many AI applications, but symbolic methods remain essential for explicit reasoning and interpretable structure.
+
+Lambda calculus and Lisp connection:
+- Lambda calculus provides the mathematical core for function abstraction/application.
+- Lisp operationalized these ideas in a practical language with S-expression syntax and first-class functions.
+- This evaluator follows that Lisp-like S-expression style while implementing lambda-calculus-style evaluation rules.
+
+Why this matters for symbolic AI:
+- Your evaluator manipulates symbols and structured expressions directly.
+- Prolog provides a natural host for this because parsing, tree processing, and rule-based evaluation are all symbolic tasks.
+- So this repo is a small, concrete bridge between historical symbolic AI ideas and executable modern code.
+
 ## Quick start
 
 From the project directory:
