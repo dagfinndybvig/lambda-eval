@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  prolog-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install SWI-Prolog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swi-prolog-nox
+
+      - name: Run factorial benchmark
+        run: |
+          output="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5.lisp'),halt.\")"
+          echo "Output: $output"
+          test "$output" = "120"
