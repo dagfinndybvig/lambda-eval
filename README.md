@@ -1,3 +1,5 @@
+<img width="360" height="553" alt="image" src="https://github.com/user-attachments/assets/bf124b7d-5d31-44bd-8931-1c33c40503c1" />
+
 # Lambda Evaluator in Prolog
 
 This project evaluates lambda-calculus-style expressions written as ASCII S-expressions.
@@ -144,7 +146,7 @@ Why:
 The strict-safe variant delays self-reference by one lambda layer:
 - `Z = λf.(λx.f (λv.((x x) v))) (λx.f (λv.((x x) v)))`
 
-That extra `λv ...` is the "intermediate term" you were referring to. It postpones expansion until an argument is supplied, which is why recursion works robustly in practical evaluators like this one.
+That extra `λv ...` postpones expansion until an argument is supplied, which is why recursion works robustly in practical evaluators like this one.
 
 So, conceptually we demonstrate fixed-point recursion in the `Y` tradition, but operationally we use the `Z`-style form for reliability.
 
