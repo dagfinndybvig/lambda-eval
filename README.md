@@ -5,6 +5,7 @@
 This project evaluates lambda-calculus-style expressions written as ASCII S-expressions.
 
 This is a purely academic project intended for learning and historical exploration of lambda calculus, Lisp-style notation, Prolog, and symbolic AI ideas.
+It also demonstrates how Prolog is useful for quickly implementing grammars and simple programming languages.
 
 License: this project is released under [The Unlicense](https://unlicense.org) (public domain dedication).
 
