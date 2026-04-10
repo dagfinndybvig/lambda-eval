@@ -131,6 +131,23 @@ This makes them work naturally with `(if ...)`.
 (fact 5)
 ```
 
+### Note on Y vs Z in this project
+
+In `examples/fact5_define.lisp`, the value named `Y` is the strict-safe fixed-point style often called `Z`.
+
+Why:
+- Classical `Y` combinator:
+  - `Y = λf.(λx.f (x x)) (λx.f (x x))`
+  - Works naturally with non-strict (normal-order/lazy) evaluation.
+- Strict/eager evaluators often try to evaluate `(x x)` too early, causing divergence.
+
+The strict-safe variant delays self-reference by one lambda layer:
+- `Z = λf.(λx.f (λv.((x x) v))) (λx.f (λv.((x x) v)))`
+
+That extra `λv ...` is the "intermediate term" you were referring to. It postpones expansion until an argument is supplied, which is why recursion works robustly in practical evaluators like this one.
+
+So, conceptually we demonstrate fixed-point recursion in the `Y` tradition, but operationally we use the `Z`-style form for reliability.
+
 It also evaluates to:
 
 ```text
