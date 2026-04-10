@@ -53,6 +53,23 @@ Why this is a good fit:
 - It is strong at symbolic data processing, recursion, and tree transforms, exactly what an interpreter needs.
 - It provides a practical bridge between classic symbolic AI ideas and modern tooling workflows (GitHub, CI, automation).
 
+## Requirements
+
+You need **SWI-Prolog** installed to run this project.
+
+Ubuntu example:
+
+```bash
+sudo apt update
+sudo apt install -y swi-prolog-nox
+```
+
+Then verify:
+
+```bash
+swipl --version
+```
+
 ## Quick start
 
 From the project directory:
