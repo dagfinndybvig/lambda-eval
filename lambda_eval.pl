@@ -4,15 +4,13 @@
 :- use_module(library(readutil)).
 
 run_file(Path) :-
-    parse_file(Path, Expr),
-    eval_expr(Expr, Value),
+    parse_file_forms(Path, Forms),
+    eval_forms(Forms, Value),
     print_value(Value).
 
 parse_file(Path, Expr) :-
-    read_file_to_string(Path, Source, []),
-    string_codes(Source, Codes),
-    phrase(program(SExpr), Codes),
-    sexpr_to_ast(SExpr, Expr).
+    parse_file_forms(Path, Forms),
+    last_expression_form(Forms, Expr).
 
 eval_expr(Expr, Value) :-
     eval(Expr, [], Value).
@@ -22,11 +20,25 @@ print_value(int(N)) :-
 print_value(Value) :-
     format('~q~n', [Value]).
 
-program(SExpr) -->
+parse_file_forms(Path, Forms) :-
+    read_file_to_string(Path, Source, []),
+    string_codes(Source, Codes),
+    phrase(program(Forms), Codes).
+
+program(Forms) -->
     ws,
-    sexpr(SExpr),
+    forms(Forms),
     ws,
     eos.
+
+forms([Form|Rest]) -->
+    sexpr(SExpr),
+    { sexpr_to_form(SExpr, Form) },
+    ws,
+    !,
+    forms(Rest).
+forms([]) -->
+    [].
 
 sexpr(int(N)) -->
     integer(N),
@@ -94,6 +106,12 @@ sexpr_to_ast(list([Head|Tail]), AppExpr) :-
 sexpr_to_ast(list([]), _) :-
     throw(error(syntax_error(empty_application), _)).
 
+sexpr_to_form(list([sym(define), sym(Name), ValueSExpr]), define(Name, ValueExpr)) :-
+    sexpr_to_ast(ValueSExpr, ValueExpr),
+    !.
+sexpr_to_form(SExpr, expr(Expr)) :-
+    sexpr_to_ast(SExpr, Expr).
+
 params_atoms([], []).
 params_atoms([sym(A)|Rest], [A|AtomsRest]) :-
     params_atoms(Rest, AtomsRest).
@@ -105,6 +123,27 @@ lambdas_from_params([P|Ps], Body, lam(P, Rest)) :-
     lambdas_from_params(Ps, Body, Rest).
 
 apply_node(Arg, Fn, app(Fn, Arg)).
+
+last_expression_form(Forms, Expr) :-
+    include(is_expression_form, Forms, ExprForms),
+    (   reverse(ExprForms, [expr(Expr)|_])
+    ;   throw(error(syntax_error(no_expression_form), _))
+    ).
+
+is_expression_form(expr(_)).
+
+eval_forms(Forms, Value) :-
+    eval_forms(Forms, [], none, Value).
+
+eval_forms([], _, none, _) :-
+    throw(error(syntax_error(no_expression_form), _)).
+eval_forms([], _, some(Value), Value).
+eval_forms([define(Name, Expr)|Rest], Env, Last, Value) :-
+    eval(Expr, Env, ExprValue),
+    eval_forms(Rest, [Name-value(ExprValue)|Env], Last, Value).
+eval_forms([expr(Expr)|Rest], Env, _, Value) :-
+    eval(Expr, Env, ExprValue),
+    eval_forms(Rest, Env, some(ExprValue), Value).
 
 eval(int(N), _, int(N)).
 eval(var(Name), Env, Value) :-
