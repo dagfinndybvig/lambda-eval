@@ -16,8 +16,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y swi-prolog-nox
 
-      - name: Run factorial benchmark
+      - name: Run factorial benchmarks
         run: |
-          output="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5.lisp'),halt.\")"
-          echo "Output: $output"
-          test "$output" = "120"
+          output1="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5.lisp'),halt.\")"
+          echo "fact5 output: $output1"
+          test "$output1" = "120"
+
+          output2="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5_define.lisp'),halt.\")"
+          echo "fact5_define output: $output2"
+          test "$output2" = "120"
