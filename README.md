@@ -4,6 +4,10 @@
 
 This project evaluates lambda-calculus-style expressions written as ASCII S-expressions.
 
+This is a purely academic project intended for learning and historical exploration of lambda calculus, Lisp-style notation, Prolog, and symbolic AI ideas.
+
+License: this project is released under [The Unlicense](https://unlicense.org) (public domain dedication).
+
 It supports:
 - `lambda` abstractions and application
 - recursion via a Y-compatible combinator expression
