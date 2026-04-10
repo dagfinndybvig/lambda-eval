@@ -32,6 +32,21 @@ Why this matters for symbolic AI:
 - Prolog provides a natural host for this because parsing, tree processing, and rule-based evaluation are all symbolic tasks.
 - So this repo is a small, concrete bridge between historical symbolic AI ideas and executable modern code.
 
+## Why SWI-Prolog in this project
+
+SWI-Prolog is the concrete Prolog system used to run this evaluator.
+
+How it figures into the implementation:
+- Runtime engine: all evaluator predicates execute on SWI-Prolog.
+- Parsing support: the project uses SWI-Prolog's DCG facilities and standard libraries to parse ASCII S-expressions.
+- CLI execution: examples run with `swipl` from the shell, which makes the project easy to script.
+- CI integration: GitHub Actions installs `swi-prolog-nox` and runs benchmark files automatically in the cloud.
+
+Why this is a good fit:
+- SWI-Prolog is mature, widely used, and easy to install on Linux and CI runners.
+- It is strong at symbolic data processing, recursion, and tree transforms, exactly what an interpreter needs.
+- It provides a practical bridge between classic symbolic AI ideas and modern tooling workflows (GitHub, CI, automation).
+
 ## Quick start
 
 From the project directory:
