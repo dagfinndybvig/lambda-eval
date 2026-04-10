@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# SWI-Prolog artifacts
+*.qlf
+*.qlf.c
+*.dSYM/
+
+# Logs/temp
+*.log
+*.tmp
+tmp/
+
+# Local environment files
+.env
+.env.*
