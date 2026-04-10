@@ -18,10 +18,10 @@ jobs:
 
       - name: Run factorial benchmarks
         run: |
-          output1="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5.lisp'),halt.\")"
+          output1="$(swipl -q -s lambda_eval.pl -g "run_file('examples/fact5.lisp'),halt.")"
           echo "fact5 output: $output1"
           test "$output1" = "120"
 
-          output2="$(swipl -q -s lambda_eval.pl -g \"run_file('examples/fact5_define.lisp'),halt.\")"
+          output2="$(swipl -q -s lambda_eval.pl -g "run_file('examples/fact5_define.lisp'),halt.")"
           echo "fact5_define output: $output2"
           test "$output2" = "120"
